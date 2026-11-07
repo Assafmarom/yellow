@@ -24,11 +24,11 @@ Search settings are shared in `search-config.json`. Changes are public to repo v
 
 Click **▶ Run Search Now** on the [dashboard](https://assafmarom.github.io/yellow/) or [search editor](https://assafmarom.github.io/yellow/search.html).
 
-- The button opens a **pre-filled GitHub issue**. Sign in with your repository-owner account and click **Submit new issue** to approve the request. You don't need to enter API keys or GitHub access tokens in the website.
-- The `.github/workflows/run-now.yml` handler accepts only requests from the repository owner with the exact command marker, then dispatches `publish.yml` and closes the GitHub issue with a status link.
-- Follow [Search workflow status](https://github.com/Assafmarom/yellow/actions/workflows/publish.yml). The dashboard publishes updated properties when the workflow completes successfully **and** the property API credentials are configured.
-- The **Refresh data** button does not run a new search; it only reloads the latest published `properties.json`.
-- Run Search Now always uses **already published** `search-config.json` settings. After editing prices or requirements, submit and confirm the settings issue **before** requesting a new search.
+- This opens the existing [GitHub Actions daily property search](https://github.com/Assafmarom/yellow/actions/workflows/publish.yml), not GitHub Issues.
+- Sign in as the repository owner if prompted. Click the **Run workflow** dropdown at the top right above workflow runs, choose the **main** branch, then click the green **Run workflow** confirmation button.
+- You can monitor the workflow status and see error logs on that page. **Refresh data** on the dashboard reads the last published feed; it does not run a search.
+- Manual runs use the **published** `search-config.json`, not unsaved changes in your browser. If you changed criteria, apply and confirm them first.
+- The website only receives new property results when a compatible listings API key is configured and the data collection succeeds. A green workflow result without keys means deployment worked, not that fresh listings were found.
 
 ## API keys and location checks
 
