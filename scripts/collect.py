@@ -41,7 +41,7 @@ def region(place,lat=None,lon=None):
             h=math.sin(dlat/2)**2+math.cos(a)*math.cos(b)*math.sin(dlon/2)**2
             return 12742*math.asin(min(1,math.sqrt(h)))
         closest=min(CENTERS,key=km)
-        return closest if km(closest)<58 else None
+        return closest if km(closest)<max(58,int(SEARCH.get('max_drive_minutes',40))*1.6) else None
     t=n(place)
     if mentions(t,['porto','gaia','matosinhos','maia','valongo','gondomar','trofa','espinho','vila do conde','santo tirso','povoa de varzim']):return 'Porto'
     if mentions(t,['lisboa','lisbon','almada','sintra','oeiras','cascais','amadora','loures','odivelas','seixal','barreiro','montijo','alcochete','mafra']):return 'Lisbon'
@@ -244,7 +244,7 @@ def main():
             # Keep previously checked results temporarily; do not suggest they are still available.
             x['statusNote']='Not confirmed by current daily search; may be outdated'
             current[k]=x
-    feed={'updated_at':NOW.isoformat(),'source':'Daily API search (partial if only one source configured)','providers_checked':checked,'errors':errors,'coverage_note':'Only newest search pages are checked; route times depend on available geolocation and API keys. Nearby checks use straight-line distance and limited Google Places results; absence cannot be established.','properties':list(current.values())[:70]}
+    feed={'updated_at':NOW.isoformat(),'source':'Daily API search (partial if only one source configured)','providers_checked':checked,'errors':errors,'coverage_note':'Only newest search pages are checked; route times depend on available geolocation and API keys. Nearby checks use straight-line distance and limited Google Places results; absence cannot be established.','search_config':SEARCH,'properties':list(current.values())[:70]}
     FEED.write_text(json.dumps(feed,ensure_ascii=False,indent=2)+'\n')
     HISTORY.write_text(json.dumps({'properties':history},ensure_ascii=False,indent=2)+'\n')
     print('Saved '+str(len(feed['properties']))+' properties')
