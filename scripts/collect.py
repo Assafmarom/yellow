@@ -122,7 +122,7 @@ def normalize(item,source):
     price=integer(item.get('price'))
     beds=integer(item.get('bedrooms') if source=='Casa SAPO' else item.get('rooms') or item.get('bedrooms'))
     baths=integer(item.get('bathrooms') or item.get('baths') or item.get('bathRooms') or item.get('numBathrooms'))
-    if price is None or not PRICE_MIN<=price<=PRICE_MAX or beds is None or beds<int(SEARCH.get('min_bedrooms',4)) or baths is None or baths<int(SEARCH.get('min_bathrooms',2)):return None
+    if price is None or not int(SEARCH.get('min_price',PRICE_MIN))<=price<=int(SEARCH.get('max_price',PRICE_MAX)) or beds is None or beds<int(SEARCH.get('min_bedrooms',4)) or baths is None or baths<int(SEARCH.get('min_bathrooms',2)):return None
     title=s(item.get('title') or item.get('suggestedTitle') or 'Moradia T4')
     ptype=n(item.get('propertyType') or item.get('property_type') or item.get('category') or item.get('detailedType'))
     if mentions(ptype,['apartment','apartamento','flat','penthouse']):return None
