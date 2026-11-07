@@ -1,41 +1,45 @@
-# Portugal Villa Finder
+# Portugal Villa Finder — customizable daily search
 
-Live dashboard for houses/villas near Porto or Lisbon.
+**Dashboard:** https://assafmarom.github.io/yellow/
 
-## Website
+**Search editor:** https://assafmarom.github.io/yellow/search.html
 
-After GitHub Pages is enabled at **Settings → Pages → Build and deployment → GitHub Actions**, the site will be at:
+**Daily workflow:** https://github.com/Assafmarom/yellow/actions/workflows/publish.yml
 
-https://assafmarom.github.io/yellow/
+## Edit any search requirement without writing code
 
-**Repository currently private:** standard free GitHub Pages public hosting requires a public repository. Open Settings → General → Danger Zone → Change repository visibility → Public. Do this only if you are comfortable publishing this website and listing data.
+1. Open the **Search editor** above.
+2. Adjust minimum and maximum price, bedroom/bathroom minimums, max driving time, Porto/Lisbon selection and the required garden, garage or renovation switches.
+3. Use **Add any requirement** or the presets for supermarket, medical clinic, pharmacy, school, public transport and park.
+4. Choose a rule type:
+   - **Nearby service:** enter any service such as `supermarket`, `medical clinic` or `physiotherapist`, set distance in km and choose required/optional. Uses Google Places API (New) and estimates **straight-line distance**, not walking/driving distance.
+   - **Listing keywords:** a text phrase searched in listing descriptions; a missing phrase is **unverified**, not evidence that the feature is absent. Portuguese spelling may be required.
+   - **Free-text wish:** any requirement not covered by structured checks, such as `quiet neighborhood` or `south-facing garden`. Will be flagged for manual verification.
+5. Click **Save draft** to store locally in your browser, or **Apply to daily search** to prefill a GitHub issue. Review it and click **Submit new issue** in GitHub. GitHub Actions validates that **the repository owner** created the issue, validates the JSON values, commits `search-config.json`, closes the request and replies with a confirmation.
+6. The updated configuration takes effect on the **next daily search** at 06:15 UTC. For an immediate search, manually run the daily workflow via its GitHub Actions page.
 
-## Daily search
+Search settings are shared in `search-config.json`. Changes are public to repo viewers if the repository is public. There is **no need to expose any GitHub access token in the website**. GitHub Issues must remain enabled. A maximum of 20 extra rules can be submitted per search to bound API cost and URL length.
 
-GitHub Actions workflow: `.github/workflows/publish.yml`; scheduled at **06:15 UTC daily**.
+## API keys and location checks
 
-Search criteria: €350,000–€400,000, 4+ bedrooms, 2+ bathrooms, new or fully renovated, garden and enclosed garage; estimated 40-minute drive to Porto or Lisbon where Google Routes and property coordinates allow verification.
+Open: https://github.com/Assafmarom/yellow/settings/secrets/actions
 
-The current three listings are a **7 November 2026 historical snapshot**, not verified as currently available. Until provider credentials are configured, the site will continue to show that dated snapshot.
+- `SCRAPPA_API_KEY` — independent Casa SAPO provider (https://scrappa.co/docs/casa-sapo-api/casa_sapo_search).
+- `IDEALISTA_RAPIDAPI_KEY` — subscription to the **exact compatible** Idealista RapidAPI provider. The collector currently expects `idealista-real-estate.p.rapidapi.com` endpoints. Verify compatibility and actual endpoint availability before paying; a key for a different provider is not enough.
+- `GOOGLE_MAPS_API_KEY` — optional; for the current collector, enable **both Routes API and Places API (New)** for that Google Cloud project, and restrict the key to those APIs. Only enabling Routes is **not enough** for nearby service requirements. Costs depend on request volumes, quotas and provider billing.
 
-## Required API secrets
+**Without listing API keys the daily workflow cannot retrieve fresh properties.** It will keep the dated initial snapshot rather than manufacturing results. With listing APIs but no Google key, drive times and nearby services remain unverified. A Google Places search may be incomplete; no returned place does not prove the service is absent. The workflow caps Google Places checks at 60 requests per run, and checks at most the newest configured pages from each listing portal.
 
-Settings → Secrets and variables → Actions → New repository secret:
+## Data and status
 
-- `SCRAPPA_API_KEY`: independent Scrappa Casa SAPO API: https://scrappa.co/docs/casa-sapo-api/casa_sapo_search
-- `IDEALISTA_RAPIDAPI_KEY`: independent apidea Idealista RapidAPI endpoint: https://apidea.es/en/idealista-api-python
-- `GOOGLE_MAPS_API_KEY`: optional Google Routes API for travel-time verification.
+- `search-config.json`: shared daily search settings.
+- `properties.json`: published listings, verification gaps, active search configuration and last updated time.
+- `history.json`: first-seen dates and historical prices.
+- `scripts/collect.py`: daily collection, listing verification and optional Google Routes/Places checks.
+- `.github/workflows/publish.yml`: scheduled collection, tests and Pages deployment.
+- `.github/workflows/update-search.yml`: owner-only validation and activation of editor changes.
+- `scripts/apply_request.py`: accepts only validated config JSON.
+- `search.html`: browser-based search editor.
+- `tests/test_collector.py`: tests for configurable prices, bedrooms, custom and nearby rules.
 
-At least one property API key is needed for new listings. Both are recommended. These are independent third-party services; fees, quotas and actual compatibility must be verified with the providers. If Idealista district autocomplete fails, add repository variable `IDEALISTA_LOCATION_IDS` (comma-separated approved Portugal district IDs).
-
-## Launch
-
-1. Make the repository public if appropriate.
-2. Enable Pages (GitHub Actions source).
-3. Add API credentials as secrets (never commit credentials).
-4. Run Actions → **Update and publish Portugal Villa Finder** → Run workflow.
-5. Visit https://assafmarom.github.io/yellow/
-
-The site reads `properties.json` when opened and every five minutes while open. The scheduled collector updates the JSON and stores price changes in `history.json`.
-
-**Notes:** API results do not guarantee listing freshness, full geographical coverage or property attributes. A missing garden/garage or unverified drive time must not be interpreted as a confirmed match. The ChatGPT daily search and its notifications are separate from this workflow. WhatsApp delivery is not configured.
+**Important:** Listing details come from providers and require independent confirmation, including the legal status of garages and the accuracy of map coordinates. Nearby medical services do not establish emergency-care access or response times. Automatic WhatsApp alerts are not configured. Existing ChatGPT notifications operate separately.
