@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "min_price": 350000,
-  "max_price": 400000,
+  "min_price": 400000,
+  "max_price": 450000,
   "min_bedrooms": 4,
   "min_bathrooms": 2,
   "max_drive_minutes": 40,
