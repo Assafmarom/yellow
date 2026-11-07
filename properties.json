@@ -1,0 +1,110 @@
+{
+  "updated_at": "2026-11-07T00:00:00Z",
+  "source": "Initial researched snapshot (not an automated live search)",
+  "properties": [
+    {
+      "id": "casa-sapo-260819",
+      "source": "Casa SAPO",
+      "sourceShort": "Casa SAPO",
+      "region": "Porto",
+      "area": "Canelas · Vila Nova de Gaia",
+      "title": "Renovated T4 bungalow in Canelas",
+      "price": 370000,
+      "beds": 4,
+      "baths": 3,
+      "energy": "B",
+      "size": "160 m²",
+      "condition": "Renovation described as near completion",
+      "garden": "Not confirmed — terrace documented",
+      "garage": "Private 30 m² garage",
+      "drive": "Listing claims 10–15 min to Porto; route not independently verified",
+      "category": "possible",
+      "categoryLabel": "Needs verification",
+      "link": "https://casa.sapo.pt/comprar-moradia-t4-vila-nova-de-gaia-canelas-09965acd-9be7-11f1-bc59-060000000052.html",
+      "image": "https://media.casasapo.pt/Z720x540/OAYES/S5/C2597/P30875277/Tphoto/ID8d1ed701-0000-0500-0000-00001ab498fa.jpg.webp",
+      "summary": "Four bedrooms, three bathrooms, garage and energy B. Garden and completed renovation unverified.",
+      "issues": [
+        "Private garden not evidenced.",
+        "Renovation completion not confirmed.",
+        "Driving time unverified."
+      ],
+      "good": [
+        "€370,000 within budget",
+        "4 bedrooms · 3 bathrooms",
+        "Private 30 m² garage",
+        "Energy B"
+      ],
+      "checked": "7 Nov 2026",
+      "listingRef": "CasaSAPO_260819"
+    },
+    {
+      "id": "casa-sapo-dn1715p",
+      "source": "Casa SAPO",
+      "sourceShort": "Casa SAPO",
+      "region": "Porto",
+      "area": "Nogueira e Silva Escura · Maia",
+      "title": "T4 duplex with garden and workshop",
+      "price": 370000,
+      "beds": 4,
+      "baths": 3,
+      "energy": "E",
+      "size": "179 m²",
+      "condition": "Used / good condition; renovation unverified",
+      "garden": "Private garden documented",
+      "garage": "Workshop; garage use needs confirmation",
+      "drive": "Not verified to central Porto",
+      "category": "excluded",
+      "categoryLabel": "Does not meet all criteria",
+      "link": "https://casa.sapo.pt/comprar-moradia-t4-maia-nogueira-e-silva-escura-61faefc3-756b-11f1-9a8d-060000000057.html",
+      "image": "https://media.casasapo.pt/Z720x540/OAYES/S5/C7112/P30570164/Tphoto/IDb476d201-0000-0500-0000-000019d45882.jpg.webp",
+      "summary": "Garden and workshop, but new/renovated condition not established.",
+      "issues": [
+        "Not confirmed new or fully renovated.",
+        "Workshop classification uncertain.",
+        "Drive time unverified."
+      ],
+      "good": [
+        "€370,000",
+        "4 bedrooms · 3 bathrooms",
+        "Private garden",
+        "Energy E"
+      ],
+      "checked": "7 Nov 2026",
+      "listingRef": "CasaSAPO_DN1715/P"
+    },
+    {
+      "id": "idealista-34440421",
+      "source": "Idealista",
+      "sourceShort": "Idealista",
+      "region": "Porto",
+      "area": "Centro · Valongo",
+      "title": "T4 townhouse with terrace and garage",
+      "price": 395000,
+      "beds": 4,
+      "baths": 2,
+      "energy": "G",
+      "size": "169 m²",
+      "condition": "Second-hand / good condition; renovation unverified",
+      "garden": "Courtyard and terrace only",
+      "garage": "Private garage described; verify enclosure",
+      "drive": "Not verified to central Porto",
+      "category": "excluded",
+      "categoryLabel": "Does not meet all criteria",
+      "link": "https://www.idealista.pt/imovel/34440421/",
+      "image": "https://img4.idealista.pt/blur/WEB_DETAIL_TOP-L-L/0/id.pro.pt.image.master/44/4f/a0/317644444.jpg",
+      "summary": "Outdoor space, garage and energy G. Garden and renovation not confirmed.",
+      "issues": [
+        "No confirmed complete renovation.",
+        "No confirmed garden.",
+        "Property-level drive time unverified."
+      ],
+      "good": [
+        "€395,000",
+        "4 bedrooms · 2 bathrooms",
+        "Energy G"
+      ],
+      "checked": "7 Nov 2026",
+      "listingRef": "34440421"
+    }
+  ]
+}
