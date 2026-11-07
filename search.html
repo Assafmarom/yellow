@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123a35">
+<title>Customize search | Portugal Villa Finder</title>
+<style>
+:root{--pine:#123a35;--pine2:#1a5146;--bg:#f8f9f6;--border:#dae3db;--text:#213b33;--muted:#688076;--accent:#dd955b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;line-height:1.5}
+a{color:var(--pine2)}header{background:var(--pine);color:#fff;padding:20px max(20px,calc((100vw - 1100px)/2))}header a{color:#cee9d9;text-decoration:none}
+main{max-width:1100px;margin:0 auto;padding:32px 20px 80px}.tag{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:#c27b40}
+h1{font:normal clamp(34px,5vw,56px) Georgia,serif;margin:4px 0 10px}h2{margin:0 0 8px;font-size:22px;letter-spacing:-.4px}p{color:var(--muted);max-width:850px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{background:#fff;border:1px solid var(--border);padding:24px;border-radius:17px;margin:18px 0;box-shadow:0 8px 28px rgba(18,58,53,.04)}
+label{font-size:13px;font-weight:700;display:block;margin:12px 0 5px}input[type=number],input[type=text],select{width:100%;padding:11px 12px;border:1px solid #cbd9d0;border-radius:9px;color:var(--text);background:#fff;font:inherit}
+input:focus,select:focus,button:focus-visible{outline:3px solid #a1cbb6;outline-offset:2px}.checks{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}.checks label{display:flex;gap:8px;align-items:center;margin:2px 0;font-weight:600}
+input[type=checkbox]{accent-color:#1b7057;width:18px;height:18px}.rule{border:1px solid #d9e4dc;background:#fafcf9;border-radius:14px;padding:16px;margin-top:12px}
+.rule .row{display:flex;gap:13px;flex-wrap:wrap;align-items:end}.rule .row>div{flex:1 1 190px}.rule .row>.compact{flex:0 1 130px}
+.rule .row>button{flex:0 0 auto}.hint{font-size:12px;color:var(--muted);margin-top:7px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button{border:1px solid #b9d0c3;border-radius:10px;background:white;padding:11px 16px;color:var(--pine);font-weight:800;cursor:pointer;font:inherit}
+button:hover{background:#edf5ef}button.primary{background:var(--pine);border-color:var(--pine);color:white}button.primary:hover{background:#1a5548}
+button.remove{border-color:#f1ccc4;color:#ae5a46;padding:8px 11px}.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.quick button{font-size:12px;padding:8px 11px;background:#eff7f1}
+.status{padding:14px 16px;border-radius:12px;background:#edf6f0;border:1px solid #cce3d2;color:#315d44;margin-top:16px}
+small{font-size:12px;color:var(--muted)}.warn{background:#fff3e8;border-color:#f2d4b3;color:#7e552f}
+footer{font-size:12px;color:var(--muted);padding:26px 0}
+@media(max-width:700px){.two{grid-template-columns:1fr}.panel{padding:17px}.rule .row>div{flex-basis:100%}header{padding:15px 20px}}
+</style>
+</head>
+<body>
+<header><a href="./index.html">⌂ CasaScope · Portugal Villa Finder</a> &nbsp; / &nbsp; Customize daily search</header>
+<main>
+<div class="tag">YOUR SEARCH, YOUR RULES</div>
+<h1>Make the search yours.</h1>
+<p>Change your budget, locations, house requirements, and add custom rules. For services such as supermarkets, medical clinics, pharmacies or schools, choose <b>Nearby service</b> and set a radius. You can add open-ended requirements for anything else.</p>
+<div class="status" id="syncStatus">Loading the currently published search…</div>
+
+<section class="panel">
+<h2>Budget and location</h2>
+<div class="two">
+<div><label for="min_price">Minimum price (€)</label><input id="min_price" type="number" step="1000" min="0"></div>
+<div><label for="max_price">Maximum price (€)</label><input id="max_price" type="number" step="1000" min="0"></div>
+<div><label for="max_drive_minutes">Maximum drive to central Porto/Lisbon (minutes)</label><input id="max_drive_minutes" type="number" min="5" max="240"></div>
+<div><label>Search regions</label><div class="checks"><label><input type="checkbox" id="area_porto"> Porto area</label><label><input type="checkbox" id="area_lisbon"> Lisbon area</label></div></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>Property requirements</h2>
+<div class="two">
+<div><label for="min_bedrooms">Minimum bedrooms</label><input id="min_bedrooms" type="number" min="1" max="20"></div>
+<div><label for="min_bathrooms">Minimum bathrooms</label><input id="min_bathrooms" type="number" min="1" max="20"></div>
+</div>
+<div class="checks" style="margin-top:18px">
+<label><input type="checkbox" id="new_or_renovated"> New or fully renovated / move-in ready</label>
+<label><input type="checkbox" id="private_garden"> Private garden</label>
+<label><input type="checkbox" id="garage"> Garage (not only an outdoor parking space)</label>
+</div>
+</section>
+
+<section class="panel">
+<h2>Anything else you want</h2>
+<p style="margin:0">Add unlimited kinds of search preferences (up to 20 rules per saved search). Nearby services use Google Places API (New) when configured. Listing keyword checks use the listing text. Free-text wishes stay marked <b>needs manual verification</b> rather than being invented.</p>
+<div class="quick">
+<button type="button" data-preset="supermarket">+ Supermarket</button>
+<button type="button" data-preset="medical">+ Medical help</button>
+<button type="button" data-preset="pharmacy">+ Pharmacy</button>
+<button type="button" data-preset="school">+ School</button>
+<button type="button" data-preset="transit">+ Transport</button>
+<button type="button" data-preset="park">+ Park</button>
+</div>
+<div id="rules"></div>
+<div class="actions" style="margin-top:18px"><button type="button" id="addRule">+ Add any requirement</button><small>Examples: swimming pool, 3 km from a supermarket, quiet street, south-facing garden, step-free access.</small></div>
+</section>
+
+<section class="panel">
+<h2>Save and activate</h2>
+<p>Your changes are saved as a browser draft first. To update the <b>daily search for all devices</b>, click “Apply to daily search,” then sign in to GitHub and submit the pre-filled issue. Only issues created by the repository owner are accepted; GitHub Actions updates the shared configuration automatically.</p>
+<div class="actions">
+<button type="button" id="saveDraft">Save draft on this browser</button>
+<button class="primary" type="button" id="apply">Apply to daily search ↗</button>
+<button type="button" id="reset">Reload published settings</button>
+<a href="./index.html">← Back to listings</a>
+</div>
+<div class="status warn" id="feedback" hidden></div>
+<p class="hint">Security: No GitHub personal access token is entered into this website. If Issues are disabled, enable them under GitHub repository Settings → General → Features → Issues. The update workflow must have permission to write repository contents. Changes take effect on the next scheduled search or manual workflow run. Changing requirements cannot make source data more complete.</p>
+</section>
+<footer>Daily listing results require compatible provider API subscriptions. Google Places API (New) is separate from Google Routes API and may incur usage charges. For emergency medical access, nearby clinic location is not a guarantee of emergency services or response time.</footer>
+</main>
+<script>
+'use strict';
+var DEFAULT={schema_version:1,min_price:350000,max_price:400000,min_bedrooms:4,min_bathrooms:2,max_drive_minutes:40,areas:['Porto','Lisbon'],must_have:{new_or_renovated:true,private_garden:true,garage:true},additional_requirements:[]};
+var published=DEFAULT, current=DEFAULT;
+function by(id){return document.getElementById(id)}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function copy(t){return JSON.parse(JSON.stringify(t))}
+function feedback(t,isBad){var e=by('feedback');e.hidden=false;e.textContent=t;e.className='status'+(isBad?' warn':'')}
+function formatRule(r,i){
+return '<div class="rule" data-index="'+i+'"><div class="row">'+
+'<div><label>Requirement name</label><input class="rlabel" type="text" maxlength="90" placeholder="e.g. Supermarket nearby" value="'+esc(r.label||'')+'"></div>'+
+'<div class="compact"><label>Check type</label><select class="rkind"><option value="nearby"'+(r.kind==='nearby'?' selected':'')+'>Nearby service</option><option value="keyword"'+(r.kind==='keyword'?' selected':'')+'>Listing keywords</option><option value="manual"'+(r.kind==='manual'?' selected':'')+'>Free-text wish</option></select></div>'+
+'<div><label>Find / describe</label><input class="rquery" type="text" maxlength="160" placeholder="supermarket, pharmacy, swimming pool, quiet street…" value="'+esc(r.query||'')+'"></div>'+
+'<div class="compact rdistgroup"><label>Within distance (km)</label><input class="rdistance" type="number" step=".1" min=".2" max="50" value="'+esc(r.max_distance_km||3)+'"></div>'+
+'<div class="compact"><label>Importance</label><select class="rrequired"><option value="true"'+(r.required?' selected':'')+'>Must have</option><option value="false"'+(!r.required?' selected':'')+'>Nice to have</option></select></div>'+
+'<button type="button" class="remove">Remove</button></div>'+
+'<div class="hint rhelp"></div></div>'
+}
+function ruleRead(node){
+var kind=node.querySelector('.rkind').value;
+return {kind:kind,label:node.querySelector('.rlabel').value.trim(),query:node.querySelector('.rquery').value.trim(),required:node.querySelector('.rrequired').value==='true',max_distance_km:kind==='nearby'?Number(node.querySelector('.rdistance').value):null}
+}
+function attachRule(node){
+node.querySelector('.remove').onclick=function(){node.remove()}
+function hint(){
+var k=node.querySelector('.rkind').value;
+node.querySelector('.rdistgroup').style.display=k==='nearby'?'':'none';
+node.querySelector('.rhelp').textContent=k==='nearby'?'Google Places: returns an approximate straight-line distance to a candidate service; requires API and property coordinates.':k==='keyword'?'Searches description and listing features. A missing phrase means not evidenced, not necessarily absent.':'Any wording is accepted, but cannot be verified automatically and remains a manual check.';
+}
+node.querySelector('.rkind').onchange=hint;hint()
+}
+function addRule(r){
+if(by('rules').children.length>=20){feedback('Maximum 20 extra requirements per saved search.',true);return}
+var w=document.createElement('div');w.innerHTML=formatRule(r||{kind:'manual',label:'',query:'',required:true,max_distance_km:3},by('rules').children.length);
+var node=w.firstElementChild;by('rules').appendChild(node);attachRule(node)
+}
+function show(c){
+current=copy(c||DEFAULT);
+['min_price','max_price','min_bedrooms','min_bathrooms','max_drive_minutes'].forEach(function(k){by(k).value=Number(current[k]??DEFAULT[k])});
+by('area_porto').checked=current.areas.includes('Porto');by('area_lisbon').checked=current.areas.includes('Lisbon');
+['new_or_renovated','private_garden','garage'].forEach(function(k){by(k).checked=Boolean(current.must_have[k])});
+by('rules').innerHTML='';
+(current.additional_requirements||[]).forEach(addRule)
+}
+function collect(){
+var c={schema_version:1,areas:[],must_have:{},additional_requirements:[]};
+['min_price','max_price','min_bedrooms','min_bathrooms','max_drive_minutes'].forEach(function(k){c[k]=Number(by(k).value)});
+if(by('area_porto').checked)c.areas.push('Porto');if(by('area_lisbon').checked)c.areas.push('Lisbon');
+['new_or_renovated','private_garden','garage'].forEach(function(k){c.must_have[k]=by(k).checked});
+by('rules').querySelectorAll('.rule').forEach(function(e){
+var r=ruleRead(e);if(!r.label||!r.query)throw new Error('Complete the requirement name and text, or remove the empty rule.');
+if(r.kind==='nearby'&&!(r.max_distance_km>=.2&&r.max_distance_km<=50))throw new Error('Nearby distances must be between 0.2 km and 50 km.');
+c.additional_requirements.push(r)
+});
+if(!c.areas.length)throw new Error('Select Porto, Lisbon, or both.');
+if(!(c.min_price>=0 && c.max_price>=c.min_price && c.max_price<=20000000))throw new Error('Enter a valid price range (maximum must be at least minimum).');
+if(!(c.min_bedrooms>=1&&c.min_bedrooms<=20&&c.min_bathrooms>=1&&c.min_bathrooms<=20))throw new Error('Enter bedroom and bathroom minimums from 1 to 20.');
+if(!(c.max_drive_minutes>=5&&c.max_drive_minutes<=240))throw new Error('Driving-time limit must be 5–240 minutes.');
+return c
+}
+function draft(c){try{localStorage.setItem('casascope-search-draft-v1',JSON.stringify(c))}catch(e){}}
+by('addRule').onclick=function(){addRule({kind:'manual',label:'',query:'',required:true,max_distance_km:3})};
+var presets={
+supermarket:{kind:'nearby',label:'Supermarket nearby',query:'supermarket',max_distance_km:3,required:true},
+medical:{kind:'nearby',label:'Medical assistance nearby',query:'medical clinic',max_distance_km:5,required:true},
+pharmacy:{kind:'nearby',label:'Pharmacy nearby',query:'pharmacy',max_distance_km:3,required:true},
+school:{kind:'nearby',label:'School nearby',query:'school',max_distance_km:4,required:false},
+transit:{kind:'nearby',label:'Public transport nearby',query:'train station',max_distance_km:5,required:false},
+park:{kind:'nearby',label:'Park nearby',query:'park',max_distance_km:3,required:false}
+};
+document.querySelectorAll('[data-preset]').forEach(function(btn){btn.onclick=function(){addRule(copy(presets[btn.dataset.preset]))}});
+by('saveDraft').onclick=function(){try{var c=collect();draft(c);feedback('Draft saved in this browser. Daily search NOT changed yet. Use Apply to daily search to submit the change.',false)}catch(e){feedback(e.message,true)}};
+by('reset').onclick=function(){show(published);feedback('Loaded the currently published settings; unsaved edits discarded.',false)};
+by('apply').onclick=function(){
+try{
+var c=collect();draft(c);
+var body='Portugal Villa Finder settings request.\n\nOnly the repository owner can activate these settings.\n\n<!-- VILLA_FINDER_CONFIG_START -->\n'+JSON.stringify(c,null,2)+'\n<!-- VILLA_FINDER_CONFIG_END -->\n';
+var link='https://github.com/Assafmarom/yellow/issues/new?'+new URLSearchParams({title:'[Villa Finder] Update search settings',body:body}).toString();
+if(link.length>7000){feedback('This search is too large for GitHub issue link. Please use fewer or shorter requirements.',true);return}
+feedback('GitHub issue form opened. Click Submit new issue there to activate these settings for the scheduled search; the change is not active until GitHub confirms it.',false);
+window.open(link,'_blank','noopener');
+}catch(e){feedback(e.message,true)}
+};
+(async function(){
+try{
+var response=await fetch('./search-config.json?time='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
+var c=await response.json();if(!c || !Array.isArray(c.areas)||!Array.isArray(c.additional_requirements))throw new Error('invalid config');
+published=c;var d=null;try{d=JSON.parse(localStorage.getItem('casascope-search-draft-v1')||'null')}catch(e){}
+show(d||c);by('syncStatus').textContent=d&&JSON.stringify(d)!==JSON.stringify(c)?'Your local draft differs from the published daily search. Edit it or click Apply to daily search to submit.':'Published daily search settings loaded. You can make changes below.';
+}catch(e){show(DEFAULT);by('syncStatus').textContent='Published settings are currently unavailable. Showing initial defaults; you can still create a draft.'}
+})();
+</script></body></html>
