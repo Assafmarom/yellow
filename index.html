@@ -29,7 +29,8 @@
 <main class="main" id="top">
  <header class="topbar"><div class="path">Research <span style="padding:0 7px;color:#b1c1b9">/</span> <b>Portugal properties</b></div><div class="top-right"><span><span class="live-dot"></span><span id="feed-status">Checking property feed…</span></span><span class="pill" id="feed-updated">Snapshot · 07 Nov 2026</span></div></header>
  <div class="content">
-  <section class="head-row hero"><div><p class="eyebrow">CURATED PROPERTY RESEARCH</p><h1>Find your place<br>in Portugal.</h1><p>A focused shortlist of houses and villas around Porto or Lisbon. Every listing is checked against your non-negotiables, with uncertainties called out before you visit.</p></div><div class="head-actions"><button class="action" id="refresh" type="button">↻ Refresh data</button><button class="action" id="export">↓ Export CSV</button><a class="action primary" href="./search.html">⚙ Customize search ↗</a><button class="action" id="criteria">View criteria</button></div></section>
+  <section class="head-row hero"><div><p class="eyebrow">CURATED PROPERTY RESEARCH</p><h1>Find your place<br>in Portugal.</h1><p>A focused shortlist of houses and villas around Porto or Lisbon. Every listing is checked against your non-negotiables, with uncertainties called out before you visit.</p></div><div class="head-actions"><a class="action primary" id="runNow" href="https://github.com/Assafmarom/yellow/actions/workflows/publish.yml" target="_blank" rel="noopener noreferrer" title="Open GitHub and confirm the request to start a new property search">▶ Run Search Now ↗</a><button class="action" id="refresh" type="button">↻ Refresh data</button><button class="action" id="export">↓ Export CSV</button><a class="action primary" href="./search.html">⚙ Customize search ↗</a><button class="action" id="criteria">View criteria</button></div></section>
+  <p class="bottom-note" id="runHint" style="display:none;margin:10px 0 0;color:#355b4c"><strong>Almost there:</strong> GitHub opened a pre-filled request. Click <strong>Submit new issue</strong> in GitHub to start a new search. The dashboard updates only after the search completes and listing APIs return data.</p>
   <section class="metrics"><div class="metric"><b id="count-all">3</b><span>Listings reviewed</span></div><div class="metric green"><b id="count-match">0</b><span>All criteria evidenced</span></div><div class="metric warn"><b id="count-possible">1</b><span>Needs verification</span></div><div class="metric"><b id="count-excluded">2</b><span>Not fully qualifying</span></div></section>
   <div class="notice"><span class="notice-icon">ⓘ</span><div><b id="feed-heading">Initial research snapshot — not yet connected to a listing collector</b><span id="feed-description">The page can load data from properties.json once hosted. No automated listing source is currently connected. Your ChatGPT task is separate. Drive times may be unverified and listings may change.</span></div></div>
   <div class="notice" id="active-rules" style="margin-bottom:20px;font-size:12px">Loading search settings…</div>
@@ -91,6 +92,10 @@ function customDetails(p) {
   return '<li>'+escapeHtml(rule.label)+' · '+escapeHtml(found?found.detail:'Not checked in the current data feed')+'</li>';
  }).join('')+'</ul></div>';
 }
+const runRequestBody='Run a property search now using the currently published search-config.json settings. The job should use the configured listing APIs and update the GitHub Pages dashboard if new data is retrieved.\n\nVILLA_FINDER_RUN_NOW_V1';
+const runRequestUrl='https://github.com/Assafmarom/yellow/issues/new?'+new URLSearchParams({title:'[Villa Finder] Run search now',body:runRequestBody}).toString();
+el('runNow').href=runRequestUrl;
+el('runNow').addEventListener('click',()=>{el('runHint').style.display='block'});
 const favoritesKey='casascope-saved-v1';
 let saved=[];
 try{saved=JSON.parse(localStorage.getItem(favoritesKey)||'[]')}catch{saved=[]}
