@@ -20,7 +20,7 @@
 <aside class="aside">
  <a class="brand" href="#top"><span class="brand-mark">⌂</span><span>CasaScope<br><small style="font-weight:450;color:#b5cdc2;font-size:11px">PORTUGAL FINDER</small></span></a>
  <div><p class="aside-label">Workspace</p><div class="navline">▦ &nbsp; Property dashboard</div></div>
- <section class="side-section"><p class="aside-label">Your search</p><span style="font-size:11px;color:#b7cfc2">Asking price</span><div class="price-range">€350k–400k</div><span class="side-copy">Portugal · Porto or Lisbon within 40 minutes</span>
+ <section class="side-section"><p class="aside-label">Your search</p><span style="font-size:11px;color:#b7cfc2">Asking price</span><div class="price-range" id="budget-summary">€350k–400k</div><span class="side-copy" id="region-summary">Portugal · Porto or Lisbon within 40 minutes</span>
  <label class="filter-label" for="region">Location</label><select id="region"><option value="all">Porto + Lisbon</option><option value="Porto">Porto area</option><option value="Lisbon">Lisbon area</option></select>
  <label class="filter-label" for="source">Source</label><select id="source"><option value="all">Both websites</option><option value="Casa SAPO">Casa SAPO</option><option value="Idealista">Idealista</option></select></section>
  <section class="side-section"><p class="aside-label">Must-have criteria</p><div class="req"><span class="tick">✓</span>4+ bedrooms · 2+ bathrooms</div><div class="req"><span class="tick">✓</span>New or recently renovated</div><div class="req"><span class="tick">✓</span>Private garden + garage</div><div class="req"><span class="tick">✓</span>Energy certificate shown</div><div class="req"><span class="tick">✓</span>≤40-minute drive, verified</div></section>
@@ -29,9 +29,10 @@
 <main class="main" id="top">
  <header class="topbar"><div class="path">Research <span style="padding:0 7px;color:#b1c1b9">/</span> <b>Portugal properties</b></div><div class="top-right"><span><span class="live-dot"></span><span id="feed-status">Checking property feed…</span></span><span class="pill" id="feed-updated">Snapshot · 07 Nov 2026</span></div></header>
  <div class="content">
-  <section class="head-row hero"><div><p class="eyebrow">CURATED PROPERTY RESEARCH</p><h1>Find your place<br>in Portugal.</h1><p>A focused shortlist of houses and villas around Porto or Lisbon. Every listing is checked against your non-negotiables, with uncertainties called out before you visit.</p></div><div class="head-actions"><button class="action" id="refresh" type="button">↻ Refresh data</button><button class="action" id="export">↓ Export CSV</button><button class="action primary" id="criteria">View criteria ↗</button></div></section>
+  <section class="head-row hero"><div><p class="eyebrow">CURATED PROPERTY RESEARCH</p><h1>Find your place<br>in Portugal.</h1><p>A focused shortlist of houses and villas around Porto or Lisbon. Every listing is checked against your non-negotiables, with uncertainties called out before you visit.</p></div><div class="head-actions"><button class="action" id="refresh" type="button">↻ Refresh data</button><button class="action" id="export">↓ Export CSV</button><a class="action primary" href="./search.html">⚙ Customize search ↗</a><button class="action" id="criteria">View criteria</button></div></section>
   <section class="metrics"><div class="metric"><b id="count-all">3</b><span>Listings reviewed</span></div><div class="metric green"><b id="count-match">0</b><span>All criteria evidenced</span></div><div class="metric warn"><b id="count-possible">1</b><span>Needs verification</span></div><div class="metric"><b id="count-excluded">2</b><span>Not fully qualifying</span></div></section>
   <div class="notice"><span class="notice-icon">ⓘ</span><div><b id="feed-heading">Initial research snapshot — not yet connected to a listing collector</b><span id="feed-description">The page can load data from properties.json once hosted. No automated listing source is currently connected. Your ChatGPT task is separate. Drive times may be unverified and listings may change.</span></div></div>
+  <div class="notice" id="active-rules" style="margin-bottom:20px;font-size:12px">Loading search settings…</div>
   <div class="row-heading"><div><h2>Property shortlist <span class="muted" style="font-family:ui-sans-serif;font-size:13px" id="visible-count">(3)</span></h2><span class="muted" style="font-size:12px">Showing researched listings, including exclusions for transparency</span></div><button class="btn-reset" id="reset">Reset filters</button></div>
   <div class="filters"><label class="search" aria-label="Search listings">⌕ <input id="query" placeholder="Search area, listing, or source…"></label><select class="smallselect" id="status" aria-label="Match status"><option value="all">All statuses</option><option value="possible">Needs verification</option><option value="excluded">Does not qualify</option><option value="verified">Fully evidenced by listing</option><option value="recent">New / price reduced</option></select><select class="smallselect" id="sort" aria-label="Sort results"><option value="newest">Newest & price drops</option><option value="price_asc">Price: low to high</option><option value="price_desc">Price: high to low</option><option value="energy">Energy class</option><option value="area">Area A–Z</option></select><label class="check"><input type="checkbox" id="favorites"> Saved only</label></div>
   <div class="cards" id="cards" aria-live="polite"></div>
@@ -42,13 +43,54 @@
  </div>
 </main>
 </div>
-<dialog id="criteriaDialog" class="criteria-modal"><h2>Search requirements</h2><p>Properties must satisfy all of these conditions before they are counted as fully verified matches:</p><ul><li>House or villa (moradia) — no apartments</li><li>€350,000–€400,000 inclusive</li><li>At least 4 bedrooms and 2 bathrooms</li><li>Newly built or fully/recently renovated and move-in ready</li><li>Private garden plus a genuine garage</li><li>Within 40 minutes’ drive of central Porto or Lisbon, with travel-time evidence</li><li>Energy rating must be reported when available; missing ratings are labeled unknown</li></ul><p style="font-size:12px;color:#698073">This website displays the latest connected JSON feed; independently collected data is required for daily updates.</p><button id="closeCriteria">Close</button></dialog>
+<dialog id="criteriaDialog" class="criteria-modal"><h2>Search requirements</h2><p>Properties must satisfy all of these conditions before they are counted as fully verified matches:</p><ul id="criteria-list"><li>Loading saved search configuration…</li></ul><p><a href="./search.html">Change prices and add new requirements ↗</a></p><p style="font-size:12px;color:#698073">This website displays the latest connected JSON feed; independently collected data is required for daily updates.</p><button id="closeCriteria">Close</button></dialog>
 <script>
 'use strict';
 let properties = [{"id": "casa-sapo-260819", "source": "Casa SAPO", "sourceShort": "Casa SAPO", "region": "Porto", "area": "Canelas · Vila Nova de Gaia", "title": "Renovated T4 bungalow in Canelas", "price": 370000, "beds": 4, "baths": 3, "energy": "B", "size": "160 m² useful area (as listed)", "condition": "Renovation described as near completion", "garden": "Not confirmed — terrace documented", "garage": "Private 30 m² garage", "drive": "Listing claims 10–15 min to Porto; independent route not verified", "category": "possible", "categoryLabel": "Needs verification", "link": "https://casa.sapo.pt/comprar-moradia-t4-vila-nova-de-gaia-canelas-09965acd-9be7-11f1-bc59-060000000052.html", "image": "https://media.casasapo.pt/Z720x540/OAYES/S5/C2597/P30875277/Tphoto/ID8d1ed701-0000-0500-0000-00001ab498fa.jpg.webp", "summary": "Four bedrooms including two suites, three bathrooms and a private garage. Energy rating B is documented. Renovation completion and a genuine private garden have not been confirmed.", "issues": ["Private garden not evidenced; terrace is not a substitute.", "Final renovation completion and move-in readiness need confirmation.", "Property-level drive time to central Porto remains unverified."], "good": ["€370,000 within budget", "4 bedrooms · 3 bathrooms", "Private garage 30 m²", "Energy rating B"], "checked": "7 Nov 2026", "listingRef": "CasaSAPO_260819"}, {"id": "casa-sapo-dn1715p", "source": "Casa SAPO", "sourceShort": "Casa SAPO", "region": "Porto", "area": "Nogueira e Silva Escura · Maia", "title": "T4 duplex with garden and workshop", "price": 370000, "beds": 4, "baths": 3, "energy": "E", "size": "179 m² useful area (as listed)", "condition": "Used / good condition — no complete renovation shown", "garden": "Private garden documented", "garage": "Workshop suitable for garage; verify legal/use details", "drive": "Not verified to central Porto", "category": "excluded", "categoryLabel": "Does not meet all criteria", "link": "https://casa.sapo.pt/comprar-moradia-t4-maia-nogueira-e-silva-escura-61faefc3-756b-11f1-9a8d-060000000057.html", "image": "https://media.casasapo.pt/Z720x540/OAYES/S5/C7112/P30570164/Tphoto/IDb476d201-0000-0500-0000-000019d45882.jpg.webp", "summary": "Four bedrooms, three bathrooms and a private garden. A ground-floor automotive workshop could function as a garage, but the listing describes the house as used rather than renovated.", "issues": ["Not confirmed newly built or fully/recently renovated — fails strict condition rule.", "Workshop-to-garage use needs verification.", "Property-level drive time to central Porto unverified."], "good": ["€370,000 within budget", "4 bedrooms · 3 bathrooms", "Private garden", "Energy rating E"], "checked": "7 Nov 2026", "listingRef": "CasaSAPO_DN1715/P"}, {"id": "idealista-34440421", "source": "Idealista", "sourceShort": "Idealista", "region": "Porto", "area": "Centro · Valongo", "title": "T4 townhouse with terrace and garage", "price": 395000, "beds": 4, "baths": 2, "energy": "G", "size": "169 m² gross area (as listed)", "condition": "Second-hand / good condition — no full renovation shown", "garden": "Courtyard and terrace; no established garden", "garage": "Private garage in description; parking-space classification in specs", "drive": "Not verified to central Porto", "category": "excluded", "categoryLabel": "Does not meet all criteria", "link": "https://www.idealista.pt/imovel/34440421/", "image": "https://img4.idealista.pt/blur/WEB_DETAIL_TOP-L-L/0/id.pro.pt.image.master/44/4f/a0/317644444.jpg", "summary": "Four bedrooms, two bathrooms and energy rating G. The listing has outdoor courtyard/terrace but does not establish a private garden; renovation is not documented.", "issues": ["Not newly built or fully/recently renovated — fails strict condition rule.", "A courtyard or terrace does not establish a private garden.", "Garage enclosure and property-level drive time need verification."], "good": ["€395,000 within budget", "4 bedrooms · 2 bathrooms", "Outdoor space", "Energy rating G"], "checked": "7 Nov 2026", "listingRef": "34440421"}];
 const el=id=>document.getElementById(id);
 const eur=n=>new Intl.NumberFormat('en-IE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
 const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let searchConfig={min_price:350000,max_price:400000,min_bedrooms:4,min_bathrooms:2,max_drive_minutes:40,areas:['Porto','Lisbon'],must_have:{new_or_renovated:true,private_garden:true,garage:true},additional_requirements:[]};
+function effectiveCategory(p) {
+ if(p.category!=='verified')return p.category;
+ const checked=Array.isArray(p.custom_requirements)?p.custom_requirements:[];
+ const missing=searchConfig.additional_requirements.some(function(rule){return rule.required&&!checked.some(function(c){return c.label===rule.label&&c.status==='evidenced'})});
+ return missing?'possible':'verified';
+}
+function configSummary() {
+ const c=searchConfig;
+ el('budget-summary').textContent=eur(c.min_price)+' – '+eur(c.max_price);
+ el('region-summary').textContent=c.areas.join(' + ')+' · within '+c.max_drive_minutes+' min driving';
+ const names=c.additional_requirements.map(function(r){return r.label+(r.kind==='nearby'?' ≤'+r.max_distance_km+' km':'')+(r.required?' (must-have)':' (optional)')});
+ el('active-rules').textContent='Active search: '+eur(c.min_price)+'–'+eur(c.max_price)+' · '+c.min_bedrooms+'+ beds / '+c.min_bathrooms+'+ baths · '+c.max_drive_minutes+' min · '+c.areas.join(' / ')+(names.length?' · Extra: '+names.join('; '):' · No additional requirements');
+ const base=['House or villa, not an apartment',eur(c.min_price)+'–'+eur(c.max_price),c.min_bedrooms+'+ bedrooms and '+c.min_bathrooms+'+ bathrooms','Within '+c.max_drive_minutes+' min from '+c.areas.join(' or '),'Energy rating shown where available'];
+ if(c.must_have.new_or_renovated)base.push('New or fully renovated');
+ if(c.must_have.private_garden)base.push('Private garden');
+ if(c.must_have.garage)base.push('Enclosed garage');
+ c.additional_requirements.forEach(function(r){base.push(r.label+' ('+r.kind+(r.kind==='nearby'?', within '+r.max_distance_km+' km':'')+', '+(r.required?'required':'optional')+')')});
+ el('criteria-list').innerHTML=base.map(function(v){return '<li>'+escapeHtml(v)+'</li>'}).join('');
+ render();
+}
+async function refreshConfig() {
+ if(location.protocol==='file:')return;
+ try {
+  const response=await fetch('./search-config.json?nocache='+Date.now(),{cache:'no-store'});
+  if(!response.ok)throw Error('Search config unavailable');
+  const c=await response.json();
+  if(!Array.isArray(c.areas)||!Array.isArray(c.additional_requirements))throw Error('Invalid config');
+  searchConfig=c;configSummary();
+ }catch(e){el('active-rules').textContent='Search settings unavailable; showing defaults. Check GitHub search-config.json.'}
+}
+function customDetails(p) {
+ if(!searchConfig.additional_requirements.length)return '';
+ const vals=Array.isArray(p.custom_requirements)?p.custom_requirements:[];
+ return '<div style="border-top:1px solid #edf0eb;margin-top:10px;padding-top:8px"><strong>Extra requirement checks</strong><ul>'+
+ searchConfig.additional_requirements.map(function(rule){
+  const found=vals.find(function(x){return x.label===rule.label});
+  return '<li>'+escapeHtml(rule.label)+' · '+escapeHtml(found?found.detail:'Not checked in the current data feed')+'</li>';
+ }).join('')+'</ul></div>';
+}
 const favoritesKey='casascope-saved-v1';
 let saved=[];
 try{saved=JSON.parse(localStorage.getItem(favoritesKey)||'[]')}catch{saved=[]}
