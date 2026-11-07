@@ -1,0 +1,41 @@
+name: Apply owner-approved villa search settings
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: write
+  issues: write
+jobs:
+  apply:
+    if: github.event.issue.user.login == github.repository_owner && github.event.issue.title == '[Villa Finder] Update search settings'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate and save requested settings
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python scripts/apply_request.py
+      - name: Commit settings to daily collector
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add search-config.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update owner property search settings [skip ci]'
+            git push origin HEAD:main
+          fi
+      - name: Confirm request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body 'Search settings were saved. They will apply to the next daily property search, or run the publishing workflow now to update the dashboard.'
+          gh issue close "$ISSUE_NUMBER"
