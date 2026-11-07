@@ -20,6 +20,16 @@
 
 Search settings are shared in `search-config.json`. Changes are public to repo viewers if the repository is public. There is **no need to expose any GitHub access token in the website**. GitHub Issues must remain enabled. A maximum of 20 extra rules can be submitted per search to bound API cost and URL length.
 
+## Run a search immediately from the website
+
+Click **▶ Run Search Now** on the [dashboard](https://assafmarom.github.io/yellow/) or [search editor](https://assafmarom.github.io/yellow/search.html).
+
+- The button opens a **pre-filled GitHub issue**. Sign in with your repository-owner account and click **Submit new issue** to approve the request. You don't need to enter API keys or GitHub access tokens in the website.
+- The `.github/workflows/run-now.yml` handler accepts only requests from the repository owner with the exact command marker, then dispatches `publish.yml` and closes the GitHub issue with a status link.
+- Follow [Search workflow status](https://github.com/Assafmarom/yellow/actions/workflows/publish.yml). The dashboard publishes updated properties when the workflow completes successfully **and** the property API credentials are configured.
+- The **Refresh data** button does not run a new search; it only reloads the latest published `properties.json`.
+- Run Search Now always uses **already published** `search-config.json` settings. After editing prices or requirements, submit and confirm the settings issue **before** requesting a new search.
+
 ## API keys and location checks
 
 Open: https://github.com/Assafmarom/yellow/settings/secrets/actions
