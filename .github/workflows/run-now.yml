@@ -1,0 +1,26 @@
+name: Run property search on owner request
+on:
+  issues:
+    types: [opened]
+permissions:
+  actions: write
+  issues: write
+  contents: read
+jobs:
+  dispatch:
+    if: github.event.issue.user.login == github.repository_owner && github.event.issue.title == '[Villa Finder] Run search now' && contains(github.event.issue.body, 'VILLA_FINDER_RUN_NOW_V1')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch property search and site deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run publish.yml --ref main
+      - name: Link to the requested search
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body 'Manual search requested successfully. Check the [Portugal Villa Finder search and deployment workflow](https://github.com/Assafmarom/yellow/actions/workflows/publish.yml) for progress. The property dashboard updates only after a successful run with listing API credentials.'
+          gh issue close "$ISSUE_NUMBER"
