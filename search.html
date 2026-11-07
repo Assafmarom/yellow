@@ -81,7 +81,7 @@ footer{font-size:12px;color:var(--muted);padding:26px 0}
 <button type="button" id="reset">Reload published settings</button>
 <a href="./index.html">← Back to listings</a>
 </div>
-<p class="hint" id="runNowEditorHint" style="display:none">A GitHub request will open. Click <b>Submit new issue</b> to start the search. It uses the already-published settings, not unsaved changes on this page.</p>
+<p class="hint" id="runNowEditorHint" style="display:none">GitHub Actions opens. Click <b>Run workflow</b> near the top right of the runs list, keep <b>main</b> selected, then click <b>Run workflow</b> to start. This uses the already-published settings, not unsaved edits.</p>
 <div class="status warn" id="feedback" hidden></div>
 <p class="hint">Security: No GitHub personal access token is entered into this website. If Issues are disabled, enable them under GitHub repository Settings → General → Features → Issues. The update workflow must have permission to write repository contents. Changes take effect on the next scheduled search or manual workflow run. Changing requirements cannot make source data more complete.</p>
 </section>
@@ -160,8 +160,7 @@ park:{kind:'nearby',label:'Park nearby',query:'park',max_distance_km:3,required:
 document.querySelectorAll('[data-preset]').forEach(function(btn){btn.onclick=function(){addRule(copy(presets[btn.dataset.preset]))}});
 by('saveDraft').onclick=function(){try{var c=collect();draft(c);feedback('Draft saved in this browser. Daily search NOT changed yet. Use Apply to daily search to submit the change.',false)}catch(e){feedback(e.message,true)}};
 by('reset').onclick=function(){show(published);feedback('Loaded the currently published settings; unsaved edits discarded.',false)};
-var runNowBody='Run a property search now using the currently published search-config.json settings. Unsaved browser drafts are not included.\n\nVILLA_FINDER_RUN_NOW_V1';
-by('runNowEditor').href='https://github.com/Assafmarom/yellow/issues/new?'+new URLSearchParams({title:'[Villa Finder] Run search now',body:runNowBody}).toString();
+by('runNowEditor').href='https://github.com/Assafmarom/yellow/actions/workflows/publish.yml';
 by('runNowEditor').addEventListener('click',function(){by('runNowEditorHint').style.display='block'});
 by('apply').onclick=function(){
 try{
